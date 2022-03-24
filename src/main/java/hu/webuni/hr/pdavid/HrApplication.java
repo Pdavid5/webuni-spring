@@ -32,10 +32,10 @@ public class HrApplication implements CommandLineRunner {
 		salaryService.newSalary(emp3);
 		salaryService.newSalary(emp4);
 
-		System.out.println(emp1.getSalary());
-		System.out.println(emp2.getSalary());
-		System.out.println(emp3.getSalary());
-		System.out.println(emp4.getSalary());
+		System.out.println(emp1.getName() + ": " + emp1.getSalary());
+		System.out.println(emp2.getName() + ": " + emp2.getSalary());
+		System.out.println(emp3.getName() + ": " + emp3.getSalary());
+		System.out.println(emp4.getName() + ": " + emp4.getSalary());
 
 	}
 }
