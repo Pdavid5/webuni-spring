@@ -20,9 +20,12 @@ public class SmartEmployeeService implements EmployeeService{
         LocalDateTime employeeWorkStarted = employee.getStartOfWork();
 
         int yearsInWork = (int) (ChronoUnit.YEARS.between(employeeWorkStarted, actuallyDate));
+        int monthsInWork = (int) (ChronoUnit.MONTHS.between(employeeWorkStarted, actuallyDate));
 
         int salary = employee.getSalary();
-        salary += (salary / 100) * calculatePercent(yearsInWork);
+//      salary += (salary / 100) * calculatePercent(yearsInWork);
+        salary += (salary / 100) * calPercentWithMonth(monthsInWork);
+
 
         return salary;
     }
@@ -37,6 +40,22 @@ public class SmartEmployeeService implements EmployeeService{
             percent = config.getSmart().getPercent().getFive();
         }
         else if(yearsInWork > config.getSmart().getLimit().getTwoandhalf() && yearsInWork < config.getSmart().getLimit().getFive()){
+            percent = config.getSmart().getPercent().getTwo();
+        }
+
+        return percent;
+    }
+
+    public int calPercentWithMonth(int monthsInWork){
+        int percent = config.getSmart().getPercent().getNothing();
+
+        if (monthsInWork >= config.getSmart().getLimit().getTen()){
+            percent = config.getSmart().getPercent().getTen();
+        }
+        else if(monthsInWork >= config.getSmart().getLimit().getFive() && monthsInWork < config.getSmart().getLimit().getTen()){
+            percent = config.getSmart().getPercent().getFive();
+        }
+        else if(monthsInWork > config.getSmart().getLimit().getTwoandhalf() && monthsInWork < config.getSmart().getLimit().getFive()){
             percent = config.getSmart().getPercent().getTwo();
         }
 
