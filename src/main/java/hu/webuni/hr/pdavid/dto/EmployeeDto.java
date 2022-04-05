@@ -1,5 +1,6 @@
-package hu.webuni.hr.pdavid.model;
+package hu.webuni.hr.pdavid.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,13 +13,14 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employee {
+public class EmployeeDto {
 
     private long id;
     private String name;
     private String position;
     private int salary;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startOfWork;
 
