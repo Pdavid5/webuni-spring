@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Editor</title>
+</head>
+<body>
+
+    <h1>Employee Editor</h1>
+
+    <form th:action="@{/api/tl/employees/{id} (id = ${editEmployee.id})}" method="post">
+    <table>
+        <tr>
+            <td>Id:</td><td th:text="${editEmployee.id}"></td>
+        </tr>
+        <tr>
+            <td>Name:</td><td><input th:field="*{editEmployee.name}" /></td><td><input type="submit" value="Modify"></td>
+        </tr>
+        <tr>
+            <td>Position:</td><td><input th:field="*{editEmployee.position}" /></td><td><input type="submit" value="Modify"></td>
+        </tr>
+        <tr>
+            <td>Salary:</td><td><input th:field="*{editEmployee.salary}" /></td><td><input type="submit" value="Modify"></td>
+        </tr>
+        <tr>
+            <td>Start of Work:</td><td><input th:field="*{editEmployee.startOfWork}" /></td><td><input type="submit" value="Modify"></td>
+        </tr>
+    </table>
+        <br />
+    </form>
+
+    <form th:action="@{/api/tl/employees}">
+        <input type="submit" value="Back">
+    </form>
+
+</body>
+</html>

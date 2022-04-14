@@ -1,10 +1,12 @@
 package hu.webuni.hr.pdavid.web;
 
+import hu.webuni.hr.pdavid.dto.CompanyDto;
 import hu.webuni.hr.pdavid.dto.EmployeeDto;
 import hu.webuni.hr.pdavid.model.Employee;
+import hu.webuni.hr.pdavid.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.yaml.snakeyaml.events.Event;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.Map;
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
+    @Autowired
+    EmployeeService employeeService;
+
     private Map<Long, EmployeeDto> employees = new HashMap<>();
 
     {
@@ -26,6 +31,7 @@ public class EmployeeController {
 
     @GetMapping
     public List<EmployeeDto> getAll(){
+
         return new ArrayList<>(employees.values());
     }
 
@@ -63,6 +69,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable long id){
+
         employees.remove(id);
     }
 
@@ -80,6 +87,11 @@ public class EmployeeController {
         else
             return ResponseEntity.notFound().build();
 
+    }
+
+    @PostMapping("/percent")
+    public int getPercent(@RequestBody Employee employee){
+        return employeeService.getPayRaisePercent(employee);
     }
 
 }

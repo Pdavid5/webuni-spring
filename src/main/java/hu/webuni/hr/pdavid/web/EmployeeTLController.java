@@ -2,8 +2,7 @@ package hu.webuni.hr.pdavid.web;
 
 import hu.webuni.hr.pdavid.model.Employee;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/api/tl")
 public class EmployeeTLController {
 
     private List<Employee> employeeList = new ArrayList<>();
@@ -30,12 +30,54 @@ public class EmployeeTLController {
         return "employees";
     }
 
-    @PostMapping("/employees")
-    public String addEmployees(Employee employee){
+    @GetMapping("/deleteEmployee/{id}")
+    public String employeeList(@PathVariable long id){
+
+        employeeList.removeIf(employee -> employee.getId() == id);
+
+
+        return "redirect:/api/tl/employees";
+    }
+
+    @PostMapping("/addEmployees")
+    public String addEmployees(Employee employee, Map<String, Object> model){
 
         employeeList.add(employee);
 
         return "redirect:employees";
+    }
+
+    @GetMapping("/employees/{id}")
+    public String modifyEmployee(@PathVariable long id, Map<String, Object> model){
+
+        for (Employee emp : employeeList){
+            if(emp.getId() == id){
+                model.put("editEmployee", emp);
+            }
+        }
+
+        return "empeditor";
+    }
+
+    @GetMapping("/empeditor")
+    public String editor(){
+
+        return "empeditor";
+    }
+
+    @PostMapping("/employees/{id}")
+    public String modifyEmployeeParam(Employee employee){
+
+        for (int i = 0; i < employeeList.size(); i++){
+
+            if (employeeList.get(i).getId() == employee.getId()){
+                employeeList.set(i, employee);
+                break;
+            }
+
+        }
+
+        return "redirect:/api/tl/employees";
     }
 
 }
